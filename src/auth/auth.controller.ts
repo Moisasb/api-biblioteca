@@ -2,6 +2,7 @@ import { Controller, Body, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { ApiTags, ApiResponse, ApiOperation } from '@nestjs/swagger';
+import { LoginDto } from './dto/login.dto';
 
 @ApiTags('Autenticação')
 @Controller('auth')
@@ -25,4 +26,20 @@ export class AuthController {
         return this.authService.cadastrar(createUsuarioDto);
     }
 
+    // define o endpoint POST /auth/login
+    @Post('login') 
+    @ApiOperation({
+        summary: 'Realizar login'
+    })
+    @ApiResponse({
+        status: 201, 
+        description: 'Login realizado com sucesso'
+    })
+    @ApiResponse({
+        status: 404, 
+        description: 'E-mail ou senha inválidos' 
+    })
+    login(@Body() LoginDto: LoginDto) { 
+        return this.authService.login(LoginDto);
+    } 
 }
