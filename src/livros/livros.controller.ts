@@ -6,13 +6,11 @@ import { ApiTags, ApiResponse, ApiOperation, ApiBearerAuth } from '@nestjs/swagg
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from 'src/auth/auth.guard';
 
-
-// define o endpoint POST/Livros
 @ApiTags('Livros') // Coloca uma Tag chamada "Livros"
 @Controller('livros')
 export class LivrosController {
     // Injetamos o LivrosService como dependência para o controller acessar
-    constructor(private readonly livrosService: LivrosService) { }
+    constructor (private readonly livrosService : LivrosService){}
 
     // Define o endpoint POST/livros
     @Post()
@@ -28,10 +26,10 @@ export class LivrosController {
         status: 404,
         description: 'Não foi possível cadastrar o livro'
     })
-    @UseGuards(AuthGuard)
-    @ApiBearerAuth()
-    criar(@Body() createLivroDto: CreateLivroDto) {
-        // O @Body captura os dados enviados no corpo da requisição
+    // @UseGuards(AuthGuard)
+    // @ApiBearerAuth()
+    criar(@Body() createLivroDto : CreateLivroDto){
+        // O @Body captura od dados enviados no corpo da requisição
         // O DTO define como esses dados deverão ser validados.
         return this.livrosService.criar(createLivroDto);
     }
@@ -49,7 +47,7 @@ export class LivrosController {
         status: 404,
         description: 'Não foi possível retornar a lista de livros'
     })
-    listarTodos() {
+    listarTodos(){
         return this.livrosService.listarTodos();
     };
 
@@ -85,7 +83,7 @@ export class LivrosController {
         status: 404,
         description: 'Não foi possível atualizar o livro'
     })
-    atualizar(@Param('id') id: number, @Body() dados: updateLivroDto) {
+    atualizar(@Param('id') id: number, @Body() dados:updateLivroDto){
         return this.livrosService.atualizar(id, dados);
     }
 
@@ -102,7 +100,7 @@ export class LivrosController {
         status: 404,
         description: 'Não foi possível remover o livro'
     })
-    remover(@Param('id') id: number) {
+    remover(@Param('id') id:number){
         return this.livrosService.remover(id);
     }
 
