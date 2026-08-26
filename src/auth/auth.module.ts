@@ -7,25 +7,25 @@ import { ConfigService } from '@nestjs/config';
 import { AuthGuard } from './auth.guard';
 
 @Module({
-  imports: [DatabaseModule,
-    // Irá configurar o módulo JWT utilizando as informações que somente estarão disponíveis quando a aplicação iniciar.
+  imports: [
+    DatabaseModule,
+    // irá configurar o módulo JWT utilizando as iniformações que somente estarão disponíveis quando a aplicação iniciar
     JwtModule.registerAsync({
-      // Para configurarmos o JWT, precisamos acessar as variáveis do .ENV
-      // Fazemos isso através do ConfigService
+      // para configurarmos o JWT, precisamos acessar as vartiaves do .ENV
+      // fazemos atraves do ConfigService
       inject: [ConfigService],
-      // useFactory é a função responsável por fazer/montar a configuração do JWT
-      useFactory: (configService:ConfigService) => ({
-        // Busca a chave de segurança que colocamos no .ENV para gerar o Token
+      useFactory: (configService: ConfigService) => ({
+        // useFactory é a função responsavel por fazer/montar a configuração do JWT 
         secret: configService.get<string>('JWT_SECRET'),
-        // Define que os tokens gerados terão duração de apenas 1h (podemos alterar se quisermos)
+        // busca a chave de seguramça que colocamos no .ENV para gerar o token
         signOptions: {
           expiresIn: '1h'
         }
       })
     })
   ],
-  controllers: [AuthController],
+  controllers: [AuthController, AuthGuard],
   providers: [AuthService, AuthGuard],
   exports: [JwtModule, AuthGuard]
 })
-export class AuthModule {}
+export class AuthModule { }

@@ -22,12 +22,10 @@ async function bootstrap() {
   .setTitle('API Biblioteca') // Título do documento
   .setDescription('API para gerenciamento da biblioteca') // Descrição
   .setVersion('1.0') // Versão do documento
-  .addBearerAuth()
+  .addBearerAuth() // 
   .build() // Comando para construção
   const documento = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api_biblioteca', app, documento);
-
-  app.enableCors()
 
   await app.listen(process.env.PORT ?? 3000);
 }
